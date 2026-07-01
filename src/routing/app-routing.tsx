@@ -1,15 +1,21 @@
 import { Suspense, lazy } from 'react'
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import LoadingBar from 'react-top-loading-bar'
+import { GuestOnly, RequireAuth } from '@/auth'
 import { Layout1 } from '@/components/layouts/layout-1'
+import { palette } from '@/config/colors'
 import { useProgress } from '@/hooks/use-progress'
 import { PlaceholderPage } from '@/pages/shared/placeholder-page'
 
-const Layout1Page = lazy(() =>
-  import('@/pages/layout-1/page').then((module) => ({ default: module.Layout1Page })),
+const DashboardPage = lazy(() =>
+  import('@/UI/dashboard/MainComponents/DashboardPage').then((module) => ({
+    default: module.DashboardPage,
+  })),
 )
 const LoginPage = lazy(() =>
-  import('@/pages/auth/login-page').then((module) => ({ default: module.LoginPage })),
+  import('@/UI/auth/MainComponents/LoginPage').then((module) => ({
+    default: module.LoginPage,
+  })),
 )
 
 function AppRoutes() {
@@ -18,42 +24,49 @@ function AppRoutes() {
 
   return (
     <>
-      <LoadingBar color="#1b84ff" progress={progress} key={location.pathname} />
+      <LoadingBar color={palette.gold} progress={progress} key={location.pathname} />
       <Routes>
-        <Route path="/auth/login" element={<LoginPage />} />
+        <Route element={<GuestOnly />}>
+          <Route path="/auth/login" element={<LoginPage />} />
+        </Route>
 
-        <Route element={<Layout1 />}>
-          <Route index element={<Layout1Page />} />
-          <Route
-            path="analytics"
-            element={
-              <PlaceholderPage
-                title="Analytics"
-                description="Track metrics and performance insights."
-              />
-            }
-          />
-          <Route
-            path="users"
-            element={
-              <PlaceholderPage title="Users" description="Manage user accounts and permissions." />
-            }
-          />
-          <Route
-            path="roles"
-            element={
-              <PlaceholderPage title="Roles" description="Configure roles and access control." />
-            }
-          />
-          <Route
-            path="settings"
-            element={
-              <PlaceholderPage
-                title="Account Settings"
-                description="Update your profile and preferences."
-              />
-            }
-          />
+        <Route element={<RequireAuth />}>
+          <Route element={<Layout1 />}>
+            <Route index element={<DashboardPage />} />
+            <Route
+              path="analytics"
+              element={
+                <PlaceholderPage
+                  title="Analytics"
+                  description="Track metrics and performance insights."
+                />
+              }
+            />
+            <Route
+              path="users"
+              element={
+                <PlaceholderPage
+                  title="Users"
+                  description="Manage user accounts and permissions."
+                />
+              }
+            />
+            <Route
+              path="roles"
+              element={
+                <PlaceholderPage title="Roles" description="Configure roles and access control." />
+              }
+            />
+            <Route
+              path="settings"
+              element={
+                <PlaceholderPage
+                  title="Account Settings"
+                  description="Update your profile and preferences."
+                />
+              }
+            />
+          </Route>
         </Route>
 
         <Route path="*" element={<Navigate to="/" replace />} />

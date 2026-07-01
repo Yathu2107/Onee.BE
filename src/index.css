@@ -1,8 +1,20 @@
 @import 'tailwindcss';
 
-@custom-variant dark (&:is(.dark *));
+/*
+ * Onee global colour palette
+ * cream  #FBECB3  pale creamy yellow
+ * gold   #EBB407  vibrant mustard / brand accent
+ * black  #060605  near-black
+ * earth  #847454  muted brown-grey
+ * white  #FFFFFF  white
+ */
 
 @theme inline {
+  --color-onee-cream: var(--onee-cream);
+  --color-onee-gold: var(--onee-gold);
+  --color-onee-black: var(--onee-black);
+  --color-onee-earth: var(--onee-earth);
+  --color-onee-white: var(--onee-white);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -33,61 +45,47 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: #f9f9f9;
-  --foreground: #071437;
-  --card: #ffffff;
-  --card-foreground: #071437;
-  --popover: #ffffff;
-  --popover-foreground: #071437;
-  --primary: #1b84ff;
-  --primary-foreground: #ffffff;
-  --secondary: #f1f1f4;
-  --secondary-foreground: #252f4a;
-  --muted: #f1f1f4;
-  --muted-foreground: #78829d;
-  --accent: #f1f1f4;
-  --accent-foreground: #252f4a;
-  --destructive: #f8285a;
-  --border: #f1f1f4;
-  --input: #dbdfe9;
-  --ring: #1b84ff;
-  --sidebar: #ffffff;
-  --sidebar-foreground: #78829d;
-  --sidebar-border: #f1f1f4;
-  --sidebar-accent: #f9f9f9;
-  --sidebar-primary: #1b84ff;
-}
+  --onee-cream: #fbecb3;
+  --onee-gold: #ebb407;
+  --onee-black: #060605;
+  --onee-earth: #847454;
+  --onee-white: #ffffff;
 
-.dark {
-  --background: #151521;
-  --foreground: #f5f5f5;
-  --card: #1e1e2d;
-  --card-foreground: #f5f5f5;
-  --popover: #1e1e2d;
-  --popover-foreground: #f5f5f5;
-  --primary: #1b84ff;
-  --primary-foreground: #ffffff;
-  --secondary: #252536;
-  --secondary-foreground: #f5f5f5;
-  --muted: #252536;
-  --muted-foreground: #9a9cae;
-  --accent: #252536;
-  --accent-foreground: #f5f5f5;
-  --destructive: #f8285a;
-  --border: #2b2b40;
-  --input: #363648;
-  --ring: #1b84ff;
-  --sidebar: #1e1e2d;
-  --sidebar-foreground: #9a9cae;
-  --sidebar-border: #2b2b40;
-  --sidebar-accent: #252536;
-  --sidebar-primary: #1b84ff;
+  --radius: 0.625rem;
+  --background: var(--onee-white);
+  --foreground: var(--onee-black);
+  --card: var(--onee-white);
+  --card-foreground: var(--onee-black);
+  --popover: var(--onee-white);
+  --popover-foreground: var(--onee-black);
+  --primary: var(--onee-gold);
+  --primary-foreground: var(--onee-black);
+  --secondary: var(--onee-cream);
+  --secondary-foreground: var(--onee-black);
+  --muted: var(--onee-cream);
+  --muted-foreground: var(--onee-earth);
+  --accent: var(--onee-cream);
+  --accent-foreground: var(--onee-black);
+  --destructive: #c53030;
+  --border: color-mix(in srgb, var(--onee-earth) 25%, var(--onee-white));
+  --input: color-mix(in srgb, var(--onee-earth) 40%, var(--onee-white));
+  --ring: var(--onee-gold);
+  --sidebar: var(--onee-white);
+  --sidebar-foreground: var(--onee-earth);
+  --sidebar-border: color-mix(in srgb, var(--onee-earth) 20%, var(--onee-white));
+  --sidebar-accent: var(--onee-cream);
+  --sidebar-primary: var(--onee-gold);
 }
 
 @layer base {
   * {
     @apply border-border;
+  }
+
+  html,
+  body,
+  #root {
+    @apply h-full w-full;
   }
 
   body {

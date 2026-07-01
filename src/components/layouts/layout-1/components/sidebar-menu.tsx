@@ -16,7 +16,7 @@ export function SidebarMenu() {
             <div
               key={`heading-${item.heading}-${index}`}
               className={cn(
-                'text-muted-foreground px-3 pt-5 pb-2 text-xs font-semibold tracking-wide uppercase',
+                'text-sidebar-foreground/70 px-3 pt-5 pb-2 text-xs font-semibold tracking-wide uppercase',
                 sidebarCollapsed && 'hidden',
               )}
             >
@@ -34,7 +34,7 @@ export function SidebarMenu() {
             className={cn(
               'flex items-center gap-2.5 rounded-md px-3 py-2 text-sm font-medium transition-colors',
               isActive(item.path)
-                ? 'bg-primary/10 text-primary'
+                ? 'bg-onee-gold/15 text-onee-gold'
                 : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-foreground',
               sidebarCollapsed && 'justify-center px-2',
             )}

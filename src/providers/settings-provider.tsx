@@ -1,8 +1,7 @@
 import { useState, type ReactNode } from 'react'
-import { ThemeProvider as NextThemesProvider } from 'next-themes'
 import { SettingsContext } from '@/providers/settings-context'
 
-function SettingsProviderInner({ children }: { children: ReactNode }) {
+export function SettingsProvider({ children }: { children: ReactNode }) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
 
   return (
@@ -15,13 +14,5 @@ function SettingsProviderInner({ children }: { children: ReactNode }) {
     >
       {children}
     </SettingsContext.Provider>
-  )
-}
-
-export function SettingsProvider({ children }: { children: ReactNode }) {
-  return (
-    <NextThemesProvider attribute="class" defaultTheme="light" enableSystem storageKey="theme">
-      <SettingsProviderInner>{children}</SettingsProviderInner>
-    </NextThemesProvider>
   )
 }
