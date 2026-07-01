@@ -9,19 +9,24 @@ export function SidebarHeader() {
   const { sidebarCollapsed, toggleSidebar } = useSettings()
 
   return (
-    <div className="border-sidebar-border flex h-16 items-center justify-between border-b px-4">
-      <Link to="/" className="flex items-center gap-2.5">
-        <div className="bg-primary flex size-8 items-center justify-center rounded-lg text-sm font-bold text-white">
-          O
-        </div>
-        {!sidebarCollapsed && (
-          <div className="flex flex-col">
-            <span className="text-sm leading-none font-semibold">Onee Admin</span>
-            <span className="text-muted-foreground text-xs">Metronic</span>
-          </div>
-        )}
-      </Link>
-      <Button variant="ghost" size="icon" onClick={toggleSidebar} className="size-8">
+    <div
+      className={cn(
+        'border-sidebar-border flex border-b',
+        sidebarCollapsed
+          ? 'h-16 items-center justify-center px-2'
+          : 'h-16 items-center justify-between px-4',
+      )}
+    >
+      {!sidebarCollapsed && (
+        <Link to="/" className="flex items-center">
+          <img
+            src="/media/logos/Logo Without Background.png"
+            alt="Onee"
+            className="h-9 w-auto max-w-[160px] object-contain"
+          />
+        </Link>
+      )}
+      <Button variant="ghost" size="icon" onClick={toggleSidebar} className="size-8 shrink-0">
         {sidebarCollapsed ? <PanelLeftOpen /> : <PanelLeftClose />}
       </Button>
     </div>

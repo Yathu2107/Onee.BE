@@ -2,34 +2,12 @@
 <html class="h-full" lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/media/app/favicon.svg" />
+    <link rel="icon" type="image/png" href="/media/logos/Logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Onee Admin | Metronic</title>
-    <script>
-      const defaultThemeMode = 'light'
-      let themeMode
-
-      if (document.documentElement) {
-        if (localStorage.getItem('theme')) {
-          themeMode = localStorage.getItem('theme')
-        } else if (document.documentElement.hasAttribute('data-theme-mode')) {
-          themeMode = document.documentElement.getAttribute('data-theme-mode')
-        } else {
-          themeMode = defaultThemeMode
-        }
-
-        if (themeMode === 'system') {
-          themeMode = window.matchMedia('(prefers-color-scheme: dark)').matches
-            ? 'dark'
-            : 'light'
-        }
-
-        document.documentElement.classList.add(themeMode)
-      }
-    </script>
+    <title>Onee Admin</title>
   </head>
   <body class="text-foreground bg-background flex h-full text-base antialiased">
-    <div class="flex grow" id="root"></div>
+    <div class="flex min-h-full w-full grow" id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

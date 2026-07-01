@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet-async'
 import { ArrowDownRight, ArrowUpRight, DollarSign, ShoppingCart, Users } from 'lucide-react'
 import { Toolbar } from '@/components/layouts/layout-1/components/toolbar'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { useAuth } from '@/auth/auth-context'
 
 const stats = [
   {
@@ -34,7 +35,9 @@ const recentOrders = [
   { id: 'ORD-1021', customer: 'James Miller', amount: '$129.00', status: 'Cancelled' },
 ]
 
-export function Layout1Page() {
+export function DashboardPage() {
+  const { user } = useAuth()
+
   return (
     <>
       <Helmet>
@@ -43,7 +46,11 @@ export function Layout1Page() {
 
       <Toolbar
         title="Dashboard"
-        description="Welcome to your Metronic admin panel overview."
+        description={
+          user
+            ? `Welcome back, ${user.userName}. Here is your admin overview.`
+            : 'Welcome to your Onee admin dashboard.'
+        }
       />
 
       <div className="space-y-5 p-5">
@@ -59,7 +66,7 @@ export function Layout1Page() {
                     <CardDescription>{stat.title}</CardDescription>
                     <CardTitle className="text-2xl">{stat.value}</CardTitle>
                   </div>
-                  <div className="bg-primary/10 text-primary flex size-10 items-center justify-center rounded-lg">
+                  <div className="bg-onee-gold/15 text-onee-gold flex size-10 items-center justify-center rounded-lg">
                     <Icon className="size-5" />
                   </div>
                 </CardHeader>
@@ -92,7 +99,7 @@ export function Layout1Page() {
                 {[40, 65, 45, 80, 55, 90, 70, 85, 60, 95, 75, 88].map((height, index) => (
                   <div key={index} className="flex flex-1 flex-col items-center gap-2">
                     <div
-                      className="bg-primary w-full rounded-t-md transition-all"
+                      className="bg-onee-gold w-full rounded-t-md transition-all"
                       style={{ height: `${height}%` }}
                     />
                     <span className="text-muted-foreground text-[10px]">

@@ -1,12 +1,25 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
-import { Bell, LogOut, Moon, Search, Sun, User } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Bell, LogOut, Search, User } from 'lucide-react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '@/auth/auth-context'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { useThemeMode } from '@/hooks/use-theme-mode'
 
 export function Header() {
-  const { setTheme, resolvedTheme, mounted } = useThemeMode()
+  const { user, logout } = useAuth()
+  const navigate = useNavigate()
+
+  const initials = user?.userName
+    ?.split(' ')
+    .map((part) => part[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase()
+
+  function handleLogout() {
+    logout()
+    navigate('/auth/login', { replace: true })
+  }
 
   return (
     <header className="border-border bg-card sticky top-0 z-10 flex h-16 shrink-0 items-center gap-4 border-b px-5">
@@ -21,23 +34,15 @@ export function Header() {
           <span className="bg-destructive absolute end-2 top-2 size-2 rounded-full" />
         </Button>
 
-        {mounted && (
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
-          >
-            {resolvedTheme === 'dark' ? <Sun /> : <Moon />}
-          </Button>
-        )}
-
         <DropdownMenu.Root>
           <DropdownMenu.Trigger asChild>
             <Button variant="ghost" className="gap-2 px-2">
-              <div className="bg-primary/10 text-primary flex size-8 items-center justify-center rounded-full text-sm font-semibold">
-                A
+              <div className="bg-onee-gold/15 text-onee-gold flex size-8 items-center justify-center rounded-full text-sm font-semibold">
+                {initials ?? 'A'}
               </div>
-              <span className="hidden text-sm font-medium md:inline">Admin</span>
+              <span className="hidden text-sm font-medium md:inline">
+                {user?.userName ?? 'Admin'}
+              </span>
             </Button>
           </DropdownMenu.Trigger>
           <DropdownMenu.Portal>
@@ -55,14 +60,12 @@ export function Header() {
                 </Link>
               </DropdownMenu.Item>
               <DropdownMenu.Separator className="bg-border my-1 h-px" />
-              <DropdownMenu.Item asChild>
-                <Link
-                  to="/auth/login"
-                  className="text-destructive hover:bg-accent flex cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-sm outline-none"
-                >
-                  <LogOut className="size-4" />
-                  Sign Out
-                </Link>
+              <DropdownMenu.Item
+                className="text-destructive hover:bg-accent flex cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-sm outline-none"
+                onSelect={handleLogout}
+              >
+                <LogOut className="size-4" />
+                Sign Out
               </DropdownMenu.Item>
             </DropdownMenu.Content>
           </DropdownMenu.Portal>
