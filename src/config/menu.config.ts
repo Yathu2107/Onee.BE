@@ -1,8 +1,9 @@
 import {
-  BarChart3,
+  Bell,
+  Briefcase,
   LayoutDashboard,
-  Settings,
-  Shield,
+  Layers,
+  MessageSquareWarning,
   Users,
   type LucideIcon,
 } from 'lucide-react'
@@ -25,29 +26,37 @@ export const MENU_SIDEBAR: MenuItem[] = [
     icon: LayoutDashboard,
   },
   {
-    title: 'Analytics',
-    path: '/analytics',
-    icon: BarChart3,
-  },
-  {
     heading: 'Management',
   },
   {
-    title: 'Users',
+    title: 'User Management',
     path: '/users',
     icon: Users,
   },
   {
-    title: 'Roles',
-    path: '/roles',
-    icon: Shield,
+    heading: 'Operations',
   },
   {
-    heading: 'Settings',
+    title: 'Jobs',
+    path: '/jobs',
+    icon: Briefcase,
   },
   {
-    title: 'Account',
-    path: '/settings',
-    icon: Settings,
+    title: 'Notifications',
+    path: '/notifications',
+    icon: Bell,
+  },
+  {
+    title: 'Complaints',
+    path: '/complaints',
+    icon: MessageSquareWarning,
+  },
+  {
+    heading: 'Master Data',
+  },
+  {
+    title: 'Worker Categories',
+    path: '/master-data/worker-categories',
+    icon: Layers,
   },
 ]
