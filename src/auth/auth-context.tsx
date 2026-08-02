@@ -6,6 +6,7 @@ import {
   useState,
   type ReactNode,
 } from 'react'
+import { logoutApi } from '@/UI/auth/MainComponents/core/auth-api'
 import type { AuthUser, LoginResult } from '@/UI/auth/MainComponents/core/types'
 
 const AUTH_TOKEN_KEY = 'onee_auth_token'
@@ -17,7 +18,7 @@ interface AuthContextValue {
   isAuthenticated: boolean
   isLoading: boolean
   login: (result: LoginResult, rememberMe: boolean) => void
-  logout: () => void
+  logout: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null)
@@ -65,14 +66,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(authUser)
   }, [])
 
-  const logout = useCallback(() => {
-    localStorage.removeItem(AUTH_TOKEN_KEY)
-    localStorage.removeItem(AUTH_REFRESH_KEY)
-    localStorage.removeItem(AUTH_USER_KEY)
-    sessionStorage.removeItem(AUTH_TOKEN_KEY)
-    sessionStorage.removeItem(AUTH_REFRESH_KEY)
-    sessionStorage.removeItem(AUTH_USER_KEY)
-    setUser(null)
+  const logout = useCallback(async () => {
+    try {
+      await logoutApi()
+    } catch {
+      // Always clear local session even if the API call fails.
+    } finally {
+      localStorage.removeItem(AUTH_TOKEN_KEY)
+      localStorage.removeItem(AUTH_REFRESH_KEY)
+      localStorage.removeItem(AUTH_USER_KEY)
+      sessionStorage.removeItem(AUTH_TOKEN_KEY)
+      sessionStorage.removeItem(AUTH_REFRESH_KEY)
+      sessionStorage.removeItem(AUTH_USER_KEY)
+      setUser(null)
+    }
   }, [])
 
   const value = useMemo(

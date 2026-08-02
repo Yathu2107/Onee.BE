@@ -16,8 +16,8 @@ export function Header() {
     .slice(0, 2)
     .toUpperCase()
 
-  function handleLogout() {
-    logout()
+  async function handleLogout() {
+    await logout()
     navigate('/auth/login', { replace: true })
   }
 
@@ -62,7 +62,9 @@ export function Header() {
               <DropdownMenu.Separator className="bg-border my-1 h-px" />
               <DropdownMenu.Item
                 className="text-destructive hover:bg-accent flex cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-sm outline-none"
-                onSelect={handleLogout}
+                onSelect={() => {
+                  void handleLogout()
+                }}
               >
                 <LogOut className="size-4" />
                 Sign Out

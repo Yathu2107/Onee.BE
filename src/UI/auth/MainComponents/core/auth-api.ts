@@ -34,3 +34,9 @@ export function resetPasswordApi(payload: ResetPasswordRequest) {
     body: JSON.stringify(payload),
   })
 }
+
+export function logoutApi() {
+  return apiRequest<string>('/api/accounts/Logout', {
+    method: 'POST',
+  })
+}
