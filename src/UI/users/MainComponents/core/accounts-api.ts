@@ -264,14 +264,24 @@ export function deleteAddress(id: number | string) {
   return apiRequest<string>(`/api/address/${id}`, { method: 'DELETE' })
 }
 
-export function getProfileImageUrl(filename?: string | null): string | null {
+export function getProfileImageUrl(
+  filename?: string | null,
+  userType?: string | null,
+): string | null {
   if (!filename || filename === 'Default.png') return null
+
+  const trimmed = filename.trim()
+  if (!trimmed) return null
+  if (/^https?:\/\//i.test(trimmed)) return trimmed
+  if (trimmed.toLowerCase().endsWith('/default.png')) return null
+
+  const folder = userType?.toLowerCase() === 'worker' ? 'Worker' : 'User'
 
   const uploadBase =
     import.meta.env.VITE_APP_UPLOAD_URL ??
     `${import.meta.env.VITE_APP_API_URL ?? ''}/Uploads/UploadImages`
 
-  return `${uploadBase.replace(/\/$/, '')}/User/${filename}`
+  return `${uploadBase.replace(/\/$/, '')}/${folder}/${trimmed}`
 }
 
 export async function getWorkerCategories(userId: string) {
