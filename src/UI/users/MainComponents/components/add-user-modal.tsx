@@ -152,7 +152,7 @@ export function AccountFormModal({
           image: null,
           isActive: active,
           isOnline: online,
-          existingImageUrl: getProfileImageUrl(details.profileImageUrl),
+          existingImageUrl: getProfileImageUrl(details.profileImageUrl, details.userType),
           addresses: details.addresses ?? [],
         })
       } catch (err) {

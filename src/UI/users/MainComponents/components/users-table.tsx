@@ -77,7 +77,7 @@ export function UsersTable({
         </thead>
         <tbody>
           {accounts.map((account) => {
-            const imageUrl = getProfileImageUrl(account.profileImageUrl)
+            const imageUrl = getProfileImageUrl(account.profileImageUrl, account.userType)
             const isActive = account.isActive?.toLowerCase() === 'active'
             const isOnline = account.isOnline?.toLowerCase() === 'online'
 
